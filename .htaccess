@@ -1,0 +1,115 @@
+﻿# ======================================================
+# BEM ITM â€” Konfigurasi HTTP & Keamanan
+# ======================================================
+
+# 1) Nonaktifkan daftar isi direktori
+Options -Indexes
+
+# 2) Karakter encoding default
+AddDefaultCharset UTF-8
+
+# 3) Nonaktifkan info versi server & PHP (celah footprinting)
+<IfModule mod_headers.c>
+    Header unset X-Powered-By
+    Header always unset X-Powered-By
+</IfModule>
+<IfModule php_module>
+    php_flag expose_php Off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag expose_php Off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag expose_php Off
+</IfModule>
+
+# 4) Proteksi file sensitif â€” tolak akses langsung
+<FilesMatch "^(config\.php|database\.sql|README\.md|\.env|\.htaccess|\.gitignore|.*\.log|.*\.sql|.*\.bak|.*\.old|.*\.swp|.*\.tmp)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 5) Tolak akses file tersembunyi (dotfiles) & folder git
+<FilesMatch "^\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^\.git(/|$) - [F,L]
+    # Cegah eksekusi PHP di area aset statis (img, css, js, uploads)
+    RewriteRule ^assets/(img|css|js|uploads)/.*\.(php\d*|phtml|pht|phar|cgi|pl|py|sh|asp|aspx)$ - [F,L,NC]
+</IfModule>
+
+# 6) Header keamanan
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self'; frame-ancestors 'self'"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>
+
+# 6b) Blokir serangan umum (SQL injection, path traversal, file inclusion)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Blokir path traversal
+    RewriteCond %{QUERY_STRING} (\.\.\/|\.\.\\) [NC,OR]
+    RewriteCond %{REQUEST_URI} (\.\.\/|\.\.\\) [NC]
+    RewriteRule .* - [F,L]
+    # Blokir SQL injection di URL
+    RewriteCond %{QUERY_STRING} (union.*select|insert.*into|delete.*from|drop.*table|update.*set|or.*1.*=.*1) [NC]
+    RewriteRule .* - [F,L]
+    # Blokir common attack paths
+    RewriteRule ^(wp-admin|wp-login|xmlrpc|xmlrpc\.php|\.env|\.git|\.svn|\.DS_Store) - [F,L,NC]
+    # Blokir akses file backup
+    RewriteRule ^.*\.(bak|old|save|swp|tmp|orig)$ - [F,L,NC]
+</IfModule>
+
+# 7) Batasi ukuran request agar sesuai upload 2 MB (plus toleransi)
+<IfModule php_module>
+    php_value upload_max_filesize 1M
+    php_value post_max_size 8M
+    php_value max_file_uploads 10
+</IfModule>
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 1M
+    php_value post_max_size 8M
+    php_value max_file_uploads 10
+</IfModule>
+<IfModule mod_php8.c>
+    php_value upload_max_filesize 1M
+    php_value post_max_size 8M
+    php_value max_file_uploads 10
+</IfModule>
+
+# 8) Kompresi (performa) â€” hanya untuk aset teks
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE application/xml image/svg+xml
+</IfModule>
+
+# 9) Cache statis untuk aset gambar (header kontrol + validasi)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/gif "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+</IfModule>
