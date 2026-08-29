@@ -149,7 +149,7 @@ img{max-width:100%;display:block;}
     .nav-cta{margin:14px 8px 0;}
     .nav-cta .btn{width:100%;justify-content:center;}
     .nav-overlay{
-        display:none;position:fixed;inset:0;background:rgba(30,8,12,.55);z-index:1000;
+        display:none;position:fixed;inset:0;background:rgba(30,8,12,.55);z-index:999;
         opacity:0;transition:opacity .3s ease;
     }
     .nav-overlay.open{display:block;opacity:1;}
