@@ -165,8 +165,13 @@ label{font-weight:600;font-size:.82rem;margin-bottom:6px;display:block;color:var
     .sidebar-backdrop.show{display:block;opacity:1;}
     .content [style*="grid-template-columns"]{grid-template-columns:1fr !important;}
     .content [style*="display:grid"]{display:flex !important;flex-direction:column !important;}
+    .card{overflow-wrap:break-word;word-break:break-word;}
+    .card h4{overflow-wrap:break-word;word-break:break-word;}
+    .form-control{overflow-wrap:break-word;word-break:break-word;}
+    .table-responsive td{overflow-wrap:break-word;word-break:break-word;}
 }
 @media(max-width:620px){
+    html{font-size:14px;}
     .sidebar{width:100%;left:-300px;}
     .sidebar.open{left:0;}
     .content{padding:14px;}
@@ -178,8 +183,9 @@ label{font-weight:600;font-size:.82rem;margin-bottom:6px;display:block;color:var
     .stat-card h4{font-size:.82rem;margin:8px 0 2px;}
     .stat-card span{font-size:1.3rem;}
     .stat-card i.fs-4{font-size:1.4rem !important;}
+    .stat-card h2{font-size:1.4rem !important;}
     .search-wrap{max-width:100%;}
-    .card{border-radius:12px;}
+    .card{border-radius:12px;padding:16px !important;}
     .form-group{margin-bottom:14px;}
     .form-group label{font-size:.8rem;}
     .form-group .form-control{padding:12px 14px;font-size:.85rem;}
@@ -188,8 +194,14 @@ label{font-weight:600;font-size:.82rem;margin-bottom:6px;display:block;color:var
     .topbar h2{font-size:1rem;}
     .btn{min-height:44px;}
     .page-head{margin-bottom:18px;}
+    .page-head p{font-size:.8rem;}
+    .table-responsive td{font-size:.8rem;}
+    .table-responsive td::before{font-size:.72rem;}
+    .badge{font-size:.7rem;padding:3px 9px;}
+    .confirm-box{padding:20px 18px;}
 }
 @media(max-width:420px){
+    html{font-size:13px;}
     .topbar{padding:10px 12px;}
     .topbar h2{font-size:.92rem;}
     .content{padding:12px;}
@@ -197,6 +209,12 @@ label{font-weight:600;font-size:.82rem;margin-bottom:6px;display:block;color:var
     .stat-card{padding:14px;}
     .stat-card h4{font-size:.78rem;}
     .stat-card span{font-size:1.2rem;}
+    .stat-card h2{font-size:1.2rem !important;}
+    .card{padding:12px !important;}
+    .form-group .form-control{padding:10px 12px;font-size:.82rem;}
+    .btn{padding:10px 14px;font-size:.82rem;}
+    .table-responsive td{font-size:.76rem;padding:5px 0;}
+    .table-responsive td::before{font-size:.7rem;}
 }
 ::selection{background:rgba(169,127,61,.25);color:var(--maroon-900);}
 :is(a,button,input,select,textarea,.toast .t-close):focus-visible{outline:3px solid rgba(169,127,61,.5);outline-offset:2px;}
