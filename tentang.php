@@ -33,23 +33,29 @@ while ($row = mysqli_fetch_assoc($q2)) $tujuan_list[] = $row;
         </div>
 
         <div class="grid grid-2" style="align-items:stretch;">
-            <div class="card reveal" style="padding:34px;background:linear-gradient(135deg,var(--maroon-900),var(--maroon));color:#fff;">
+            <div class="card reveal vm-visi" style="background:linear-gradient(135deg,var(--maroon-900),var(--maroon));color:#fff;">
                 <i class="bi bi-eye" style="font-size:2rem;color:var(--gold-light);"></i>
                 <h3 style="color:#fff;margin:16px 0 12px;">Visi</h3>
                 <p style="opacity:.92;line-height:1.8;font-size:.95rem;"><?php echo nl2br(esc($profil['visi'] ?? 'Mewujudkan BEM Institut Teknologi Mojosari yang aspiratif, kolaboratif, inovatif, dan berintegritas dalam mendukung kemajuan mahasiswa dan institusi.')); ?></p>
             </div>
 
-            <div class="card reveal" style="padding:34px;">
+            <div class="card reveal vm-misi">
                 <i class="bi bi-flag" style="font-size:2rem;color:var(--maroon);"></i>
                 <h3 style="color:var(--maroon-900);margin:16px 0 12px;">Misi</h3>
-                <ul style="padding-left:0;list-style:none;margin:0;">
+                <ul class="vm-misi-list">
                     <?php if (!empty($misi_list)): foreach ($misi_list as $i => $m): ?>
-                    <li style="display:flex;gap:12px;margin-bottom:14px;font-size:.9rem;color:var(--ink-soft);line-height:1.6;">
-                        <span style="flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--maroon-tint);color:var(--maroon);font-weight:700;font-size:.78rem;display:flex;align-items:center;justify-content:center;"><?php echo $i+1; ?></span>
-                        <?php echo esc($m['isi_misi']); ?>
+                    <li class="vm-misi-item">
+                        <button class="vm-misi-toggle" onclick="this.parentElement.classList.toggle('open')">
+                            <span class="nomor"><?php echo $i+1; ?></span>
+                            <span><?php echo esc(mb_strimwidth($m['isi_misi'],0,60,'...')); ?></span>
+                            <i class="bi bi-chevron-down arrow"></i>
+                        </button>
+                        <div class="vm-misi-body">
+                            <div class="vm-misi-body-inner"><?php echo esc($m['isi_misi']); ?></div>
+                        </div>
                     </li>
                     <?php endforeach; else: ?>
-                        <li style="color:var(--ink-soft);font-size:.9rem;">Data misi belum tersedia.</li>
+                        <li style="color:var(--ink-soft);font-size:.9rem;padding:14px 4px;">Data misi belum tersedia.</li>
                     <?php endif; ?>
                 </ul>
             </div>
@@ -63,7 +69,7 @@ while ($row = mysqli_fetch_assoc($q2)) $tujuan_list[] = $row;
             </div>
             <div class="grid grid-3">
                 <?php if (!empty($tujuan_list)): foreach ($tujuan_list as $t): ?>
-                <div style="border:1px solid var(--line);border-radius:14px;padding:22px;">
+                <div class="tujuan-card" style="border:1px solid var(--line);border-radius:14px;padding:22px;">
                     <i class="bi bi-check2-circle" style="color:var(--gold-dark);font-size:1.3rem;"></i>
                     <p style="font-size:.87rem;color:var(--ink-soft);line-height:1.7;margin-top:10px;"><?php echo esc($t['isi_tujuan']); ?></p>
                 </div>

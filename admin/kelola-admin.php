@@ -169,17 +169,17 @@ include 'includes/admin-header.php';
             <tbody>
             <?php while ($row = mysqli_fetch_assoc($list)): ?>
             <tr>
-                <td><code style="background:var(--cream);padding:3px 8px;border-radius:4px;font-size:.8rem;"><?php echo esc($row['username']); ?></code></td>
-                <td><?php echo esc($row['nama_lengkap']); ?></td>
-                <td>
+                <td data-label="Username"><code style="background:var(--cream);padding:3px 8px;border-radius:4px;font-size:.8rem;"><?php echo esc($row['username']); ?></code></td>
+                <td data-label="Nama"><?php echo esc($row['nama_lengkap']); ?></td>
+                <td data-label="Role">
                     <?php
                     $role_label = ROLES[$row['role']]['label'] ?? $row['role'];
                     $badge_cls = $row['role'] === 'super_admin' ? 'badge-maroon' : 'badge-gold';
                     ?>
                     <span class="badge <?php echo $badge_cls; ?>"><?php echo esc($role_label); ?></span>
                 </td>
-                <td style="font-size:.8rem;color:var(--ink-soft);"><?php echo date('d/m/Y', strtotime($row['created_at'])); ?></td>
-                <td style="white-space:nowrap;">
+                <td data-label="Dibuat" style="font-size:.8rem;color:var(--ink-soft);"><?php echo date('d/m/Y', strtotime($row['created_at'])); ?></td>
+                <td data-label="Aksi" class="action-cell">
                     <a href="?edit_id=<?php echo $row['id']; ?>" class="btn btn-outline btn-sm"><i class="bi bi-pencil"></i></a>
                     <?php if ($row['id'] != $_SESSION['admin_id']): ?>
                     <a href="?hapus=<?php echo $row['id']; ?>" onclick="return confirmAction('Hapus admin ini?', this.href)" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>

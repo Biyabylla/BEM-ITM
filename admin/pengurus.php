@@ -67,7 +67,9 @@ include 'includes/admin-header.php';
 </div>
 
 <div style="margin-bottom:24px;">
-    <input type="text" id="adminPengurusSearch" class="form-control" placeholder="Cari nama, jabatan, atau departemen..." style="width:300px;padding:.5rem .8rem;font-size:1rem;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);">
+    <div class="search-wrap">
+        <input type="text" id="adminPengurusSearch" class="form-control" placeholder="Cari nama, jabatan, atau departemen...">
+    </div>
 </div>
 
 <div style="display:grid;grid-template-columns:.9fr 1.4fr;gap:24px;align-items:start;">
@@ -149,15 +151,15 @@ include 'includes/admin-header.php';
             <tbody>
             <?php while ($row = mysqli_fetch_assoc($list)): ?>
             <tr>
-                <td><?php echo esc($row['nama']); ?></td>
-                <td><?php echo esc($row['jabatan']); ?></td>
-                <td><?php
+                <td data-label="Nama"><?php echo esc($row['nama']); ?></td>
+                <td data-label="Jabatan"><?php echo esc($row['jabatan']); ?></td>
+                <td data-label="Departemen"><?php
                     $label_map = ['pembina'=>'Pembina','pimpinan'=>'Pimpinan BPH','bph'=>'Anggota BPH'];
                     echo $row['kategori']=='departemen' ? esc($row['nama_departemen'] ?? '-') : '<span class="badge badge-gold">'.esc($label_map[$row['kategori']] ?? ucfirst($row['kategori'])).'</span>';
                     ?></td>
-                <td><?php echo $row['kabinet_id'] ? esc($row['nama_kabinet']) . ' <small style="color:var(--ink-soft);">(' . esc($row['kab_periode']) . ')</small>' : '<small style="color:var(--ink-soft);">-</small>'; ?></td>
-                <td><?php echo esc($row['program_studi'] ?: '-'); ?></td>
-                <td style="white-space:nowrap;">
+                <td data-label="Kabinet"><?php echo $row['kabinet_id'] ? esc($row['nama_kabinet']) . ' <small style="color:var(--ink-soft);">(' . esc($row['kab_periode']) . ')</small>' : '<small style="color:var(--ink-soft);">-</small>'; ?></td>
+                <td data-label="Prodi"><?php echo esc($row['program_studi'] ?: '-'); ?></td>
+                <td data-label="Aksi" class="action-cell">
                     <a href="?edit=<?php echo $row['id']; ?>" class="btn btn-outline btn-sm"><i class="bi bi-pencil"></i></a>
                     <a href="?hapus=<?php echo $row['id']; ?>" onclick="return confirmAction('Hapus pengurus ini?', this.href)" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                 </td>

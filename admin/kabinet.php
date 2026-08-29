@@ -68,7 +68,9 @@ include 'includes/admin-header.php';
 </div>
 
 <div style="margin-bottom:24px;">
-    <input type="text" id="adminKabinetSearch" class="form-control" placeholder="Cari nama kabinet..." style="width:300px;padding:.5rem .8rem;font-size:1rem;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);">
+    <div class="search-wrap">
+        <input type="text" id="adminKabinetSearch" class="form-control" placeholder="Cari nama kabinet...">
+    </div>
 </div>
 
 <div style="display:grid;grid-template-columns:.9fr 1.4fr;gap:24px;align-items:start;">
@@ -111,16 +113,16 @@ include 'includes/admin-header.php';
             <tbody>
             <?php while ($row = mysqli_fetch_assoc($list)): ?>
             <tr>
-                <td>
+                <td data-label="Kabinet">
                     <div style="display:flex;align-items:center;gap:10px;">
                         <?php if (!empty($row['logo'])): ?><img src="<?php echo esc(img_url($row['logo'])); ?>" style="width:34px;height:34px;border-radius:50%;object-fit:cover;"><?php endif; ?>
                         <b><?php echo esc($row['nama_kabinet']); ?></b>
                     </div>
                 </td>
-                <td><?php echo esc($row['periode']); ?></td>
-                <td><?php echo (int)$row['jml_pengurus']; ?></td>
-                <td><?php echo $row['is_aktif'] ? '<span class="badge badge-gold"><i class="bi bi-star-fill"></i> Aktif</span>' : '<span class="badge badge-maroon">Arsip</span>'; ?></td>
-                <td style="white-space:nowrap;">
+                <td data-label="Periode"><?php echo esc($row['periode']); ?></td>
+                <td data-label="Pengurus"><?php echo (int)$row['jml_pengurus']; ?></td>
+                <td data-label="Status"><?php echo $row['is_aktif'] ? '<span class="badge badge-gold"><i class="bi bi-star-fill"></i> Aktif</span>' : '<span class="badge badge-maroon">Arsip</span>'; ?></td>
+                <td data-label="Aksi" class="action-cell">
                     <?php if (!$row['is_aktif']): ?>
                     <a href="?aktif=<?php echo $row['id']; ?>" class="btn btn-outline btn-sm" title="Jadikan aktif"><i class="bi bi-star"></i></a>
                     <?php endif; ?>

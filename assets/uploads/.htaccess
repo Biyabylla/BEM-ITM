@@ -1,47 +1,4 @@
-# ======================================================
-# BEM ITM — Proteksi Folder Aset/Upload
-# ======================================================
-
-# 1) Nonaktifkan daftar isi direktori
 Options -Indexes
-
-# 2) Folder ini HANYA untuk file statis — matikan eksekusi PHP & skrip lain
-<IfModule php_module>
-    php_flag engine off
-</IfModule>
-<IfModule mod_php7.c>
-    php_flag engine off
-</IfModule>
-<IfModule mod_php8.c>
-    php_flag engine off
-</IfModule>
-RemoveHandler .php .phtml .pht .php3 .php4 .php5 .php7 .php8 .phar .cgi .pl .py .asp .aspx .sh
-RemoveType .php .phtml .pht .phar
-
-# Saat file dibuka langsung (XML/SVG), kunci agar skrip tidak berjalan
-<IfModule mod_headers.c>
-    Header always set X-Content-Type-Options "nosniff"
-    Header always set Content-Security-Policy "default-src 'none'; style-src 'unsafe-inline'; sandbox"
-</IfModule>
-
-# 3) Tolak semua permintaan file skrip secara tegas
 <FilesMatch "\.(php\d*|phtml|pht|phar|cgi|pl|py|sh|asp|aspx)$">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order allow,deny
-        Deny from all
-    </IfModule>
-</FilesMatch>
-
-# 4) Tolak akses file tersembunyi
-<FilesMatch "^\.">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order allow,deny
-        Deny from all
-    </IfModule>
+    Require all denied
 </FilesMatch>

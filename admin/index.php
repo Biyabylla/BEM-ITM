@@ -100,11 +100,11 @@ include 'includes/admin-header.php';
         <tbody>
         <?php foreach ($aspirasi_terbaru as $a): ?>
             <tr>
-                <td><?php echo esc($a['nama']); ?></td>
-                <td><span class="badge badge-maroon"><?php echo esc(ucfirst($a['jenis'])); ?></span></td>
-                <td><?php echo esc(mb_strimwidth($a['pesan'],0,50,'...')); ?></td>
-                <td><?php echo date('d/m/Y', strtotime($a['created_at'])); ?></td>
-                <td><span class="badge badge-gold"><?php echo esc(ucfirst($a['status'])); ?></span></td>
+                <td data-label="Nama"><?php echo esc($a['nama']); ?></td>
+                <td data-label="Jenis"><span class="badge badge-maroon"><?php echo esc(ucfirst($a['jenis'])); ?></span></td>
+                <td data-label="Pesan"><?php echo esc(mb_strimwidth($a['pesan'],0,50,'...')); ?></td>
+                <td data-label="Tanggal"><?php echo date('d/m/Y', strtotime($a['created_at'])); ?></td>
+                <td data-label="Status"><span class="badge badge-gold"><?php echo esc(ucfirst($a['status'])); ?></span></td>
             </tr>
         <?php endforeach; ?>
         <?php if (empty($aspirasi_terbaru)): ?>

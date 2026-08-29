@@ -89,20 +89,27 @@ toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 const navOverlay = document.getElementById('navOverlay');
+const navClose = document.getElementById('navClose');
 
 function closeMenu(){
     navMenu.classList.remove('open');
     navOverlay.classList.remove('open');
     navToggle.innerHTML = '<i class="bi bi-list"></i>';
 }
+function openMenu(){
+    navMenu.classList.add('open');
+    navOverlay.classList.add('open');
+    navToggle.innerHTML = '<i class="bi bi-x-lg"></i>';
+    var active = navMenu.querySelector('a.active');
+    if(active) active.scrollIntoView({behavior:'smooth',block:'center'});
+}
 function toggleMenu(){
-    const isOpen = navMenu.classList.toggle('open');
-    navOverlay.classList.toggle('open', isOpen);
-    navToggle.innerHTML = isOpen ? '<i class="bi bi-x-lg"></i>' : '<i class="bi bi-list"></i>';
+    if(navMenu.classList.contains('open')) closeMenu(); else openMenu();
 }
 navToggle && navToggle.addEventListener('click', toggleMenu);
 navOverlay && navOverlay.addEventListener('click', closeMenu);
-document.querySelectorAll('#navMenu a').forEach(a => a.addEventListener('click', closeMenu));
+navClose && navClose.addEventListener('click', closeMenu);
+document.querySelectorAll('#navMenu a').forEach(a => a.addEventListener('click', ()=> { if(window.innerWidth <= 991) closeMenu(); }));
 
 /* ===== SCROLL REVEAL SEDERHANA ===== */
 const revealItems = document.querySelectorAll('.reveal');

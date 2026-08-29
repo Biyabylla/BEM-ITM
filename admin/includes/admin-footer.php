@@ -88,13 +88,21 @@ function openSidebar(){
     sidebar.classList.add('open'); 
     backdrop.classList.add('show'); 
     menuToggle.innerHTML = '<i class="bi bi-x-lg"></i>';
-    // Scroll ke item aktif
+    document.body.style.overflow = 'hidden';
     setTimeout(function(){
-        var active = sidebar.querySelector('nav a.active');
-        if(active) active.scrollIntoView({behavior:'smooth', block:'center'});
-    }, 350);
+        var active = sidebar.querySelector('.sidebar-nav a.active');
+        if(active){
+            var navWrap = sidebar.querySelector('.sidebar-nav');
+            if(navWrap) navWrap.scrollTop = active.offsetTop - 80;
+        }
+    }, 100);
 }
-function closeSidebar(){ sidebar.classList.remove('open'); backdrop.classList.remove('show'); menuToggle.innerHTML = '<i class="bi bi-list"></i>'; }
+function closeSidebar(){ 
+    sidebar.classList.remove('open'); 
+    backdrop.classList.remove('show'); 
+    menuToggle.innerHTML = '<i class="bi bi-list"></i>';
+    document.body.style.overflow = '';
+}
 
 menuToggle && menuToggle.addEventListener('click', ()=> sidebar.classList.contains('open') ? closeSidebar() : openSidebar());
 sidebarClose && sidebarClose.addEventListener('click', closeSidebar);

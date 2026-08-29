@@ -59,7 +59,9 @@ include 'includes/admin-header.php';
 </div>
 
 <div style="margin-bottom:24px;">
-    <input type="text" id="adminSambutanSearch" class="form-control" placeholder="Cari nama/jabatan..." style="width:300px;padding:.5rem .8rem;font-size:1rem;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);">
+    <div class="search-wrap">
+        <input type="text" id="adminSambutanSearch" class="form-control" placeholder="Cari nama/jabatan...">
+    </div>
 </div>
 
 <div style="display:grid;grid-template-columns:.9fr 1.4fr;gap:24px;align-items:start;">
@@ -106,10 +108,10 @@ include 'includes/admin-header.php';
             <tbody>
             <?php while ($row = mysqli_fetch_assoc($list)): ?>
             <tr>
-                <td><?php echo $row['urutan']; ?></td>
-                <td><?php echo esc($row['jabatan']); ?></td>
-                <td><?php echo esc($row['nama']); ?></td>
-                <td style="white-space:nowrap;">
+                <td data-label="Urutan"><?php echo $row['urutan']; ?></td>
+                <td data-label="Jabatan"><?php echo esc($row['jabatan']); ?></td>
+                <td data-label="Nama"><?php echo esc($row['nama']); ?></td>
+                <td data-label="Aksi" class="action-cell">
                     <a href="?edit=<?php echo $row['id']; ?>" class="btn btn-outline btn-sm"><i class="bi bi-pencil"></i></a>
                     <a href="?hapus=<?php echo $row['id']; ?>" onclick="return confirmAction('Hapus sambutan ini?', this.href)" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                 </td>

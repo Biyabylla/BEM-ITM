@@ -84,7 +84,9 @@ include 'includes/admin-header.php';
 </div>
 
 <div style="margin-bottom:24px;">
-    <input type="text" id="profilSearch" class="form-control" placeholder="Cari poin misi/tujuan..." style="width:300px;padding:.5rem .8rem;font-size:1rem;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);">
+    <div class="search-wrap">
+        <input type="text" id="profilSearch" class="form-control" placeholder="Cari poin misi/tujuan...">
+    </div>
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">

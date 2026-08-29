@@ -93,11 +93,13 @@ img{max-width:100%;display:block;}
 }
 .nav-brand .brand-text b{display:block;font-size:1.02rem;font-weight:700;font-family:'Poppins',sans-serif;}
 .nav-brand .brand-text span{display:block;font-size:.68rem;opacity:.85;letter-spacing:.03em;}
-.nav-menu{display:flex;align-items:center;gap:6px;list-style:none;margin:0;padding:0;}
+.nav-menu{display:flex;align-items:center;gap:6px;margin:0;padding:0;}
+.nav-menu .nav-close,.nav-menu .mobile-brand,.nav-menu .nav-grp{display:none;}
 .nav-menu a{
-    color:#f2e4e6;font-size:.86rem;font-weight:600;padding:10px 14px;border-radius:8px;
+    color:#f2e4e6;font-size:.95rem;font-weight:600;padding:10px 16px;border-radius:8px;
     transition:.2s;position:relative;
 }
+.nav-menu a i{display:none;}
 .nav-menu a:hover, .nav-menu a.active{color:#fff;background:rgba(255,255,255,.1);}
 .nav-menu a.active::after{
     content:'';position:absolute;left:14px;right:14px;bottom:3px;height:2.5px;background:var(--gold);border-radius:3px;
@@ -111,20 +113,46 @@ img{max-width:100%;display:block;}
 @media(max-width:991px){
     .nav-toggle{display:flex;}
     .nav-menu{
-        position:fixed;top:0;right:-100%;height:100vh;width:78%;max-width:320px;
+        position:fixed;top:0;left:-100%;height:100vh;width:280px;
         background:linear-gradient(180deg,var(--maroon-900),var(--maroon-800));
-        flex-direction:column;align-items:stretch;padding:90px 24px 24px;gap:4px;
-        transition:right .35s cubic-bezier(.4,0,.2,1);box-shadow:-10px 0 40px rgba(0,0,0,.3);
-        overflow-y:auto;
+        flex-direction:column;align-items:stretch;padding:20px 14px;gap:0;
+        transition:left .3s cubic-bezier(.4,0,.2,1);box-shadow:none;
+        overflow-y:auto;-webkit-overflow-scrolling:touch;z-index:1001;
     }
-    .nav-menu.open{right:0;}
-    .nav-menu a{padding:14px 16px;font-size:.95rem;border-bottom:1px solid rgba(255,255,255,.06);}
-    .nav-cta{margin:14px 0 0;}
-    .nav-cta .btn{width:100%;}
+    .nav-menu.open{left:0;box-shadow:20px 0 60px rgba(0,0,0,.45);}
+    .nav-menu .nav-close{
+        display:flex;position:absolute;top:14px;right:14px;width:32px;height:32px;
+        border-radius:50%;border:none;background:rgba(255,255,255,.1);color:#fff;
+        font-size:.85rem;cursor:pointer;align-items:center;justify-content:center;z-index:10;
+    }
+    .nav-menu .nav-close:hover{background:rgba(255,255,255,.2);}
+    .nav-menu .mobile-brand{
+        display:flex;align-items:center;gap:10px;padding:0 8px;margin-bottom:24px;cursor:pointer;
+    }
+    .nav-menu .mobile-brand img{width:38px;height:38px;border-radius:50%;background:var(--gold);padding:2px;object-fit:cover;}
+    .nav-menu .mobile-brand b{display:block;font-size:.9rem;color:#fff;font-family:'Poppins',sans-serif;}
+    .nav-menu .mobile-brand span{display:block;font-size:.65rem;color:rgba(255,255,255,.7);}
+    .nav-menu .nav-grp{
+        display:block;font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;opacity:.55;
+        margin:18px 8px 6px;color:#eadfe1;padding:0 8px;
+    }
+    .nav-menu a{
+        padding:14px 16px;font-size:.9rem;font-weight:500;color:#eadfe1;
+        border-radius:12px;margin-bottom:2px;transition:.15s;min-height:48px;
+        display:flex;align-items:center;gap:14px;touch-action:manipulation;
+        -webkit-tap-highlight-color:transparent;text-decoration:none;border-bottom:none;
+    }
+    .nav-menu a i{display:inline-flex;font-size:1.15rem;width:22px;text-align:center;flex-shrink:0;}
+    .nav-menu a:hover{background:rgba(255,255,255,.1);}
+    .nav-menu a.active{background:var(--gold);color:var(--maroon-900);font-weight:700;box-shadow:0 2px 8px rgba(169,127,61,.3);}
+    .nav-menu a:active{background:rgba(255,255,255,.15);transform:scale(.97);}
+    .nav-cta{margin:14px 8px 0;}
+    .nav-cta .btn{width:100%;justify-content:center;}
     .nav-overlay{
-        display:none;position:fixed;inset:0;background:rgba(20,5,8,.55);z-index:998;
+        display:none;position:fixed;inset:0;background:rgba(30,8,12,.55);z-index:1000;
+        opacity:0;transition:opacity .3s ease;
     }
-    .nav-overlay.open{display:block;}
+    .nav-overlay.open{display:block;opacity:1;}
 }
 
 /* ===== HERO / PAGE HEADER ===== */
@@ -196,13 +224,61 @@ section{padding:70px 0;}
     box-shadow:var(--shadow-sm);transition:.3s cubic-bezier(.4,0,.2,1);overflow:hidden;
 }
 .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);}
+@media(max-width:600px){.card:hover{transform:none;box-shadow:var(--shadow-sm);}}
+
+/* ===== TENTANG KAMI — VISI MISI MOBILE ===== */
+.vm-visi,.vm-misi{padding:34px;}
+.vm-misi-list{padding-left:0;list-style:none;margin:0;}
+.vm-misi-item{
+    border-bottom:1px solid var(--line);overflow:hidden;
+}
+.vm-misi-item:last-child{border-bottom:none;}
+.vm-misi-toggle{
+    display:flex;align-items:center;gap:12px;width:100%;padding:14px 4px;
+    background:none;border:none;cursor:pointer;font-family:'Poppins',sans-serif;
+    font-size:.9rem;font-weight:600;color:var(--maroon-900);text-align:left;
+    transition:.15s;min-height:48px;
+}
+.vm-misi-toggle:active{background:rgba(0,0,0,.03);}
+.vm-misi-toggle .nomor{
+    flex-shrink:0;width:28px;height:28px;border-radius:50%;
+    background:var(--maroon-tint);color:var(--maroon);font-weight:700;font-size:.78rem;
+    display:flex;align-items:center;justify-content:center;transition:.2s;
+}
+.vm-misi-toggle .arrow{
+    margin-left:auto;font-size:.8rem;color:var(--ink-soft);transition:transform .25s;
+}
+.vm-misi-item.open .vm-misi-toggle .arrow{transform:rotate(180deg);}
+.vm-misi-item.open .vm-misi-toggle .nomor{background:var(--maroon);color:#fff;}
+.vm-misi-body{
+    max-height:0;overflow:hidden;transition:max-height .3s ease;
+}
+.vm-misi-body-inner{
+    padding:0 4px 14px 44px;font-size:.88rem;color:var(--ink-soft);line-height:1.7;
+}
+.vm-misi-item.open .vm-misi-body{max-height:300px;}
+
+@media(max-width:600px){
+    .vm-visi,.vm-misi{padding:22px 18px;}
+    .vm-visi i{font-size:1.6rem!important;}
+    .vm-visi h3,.vm-misi h3{font-size:1.05rem;margin:10px 0 8px;}
+    .vm-visi p{font-size:.88rem;line-height:1.7;}
+    .vm-misi-toggle{font-size:.85rem;padding:12px 2px;}
+    .vm-misi-body-inner{padding-left:40px;font-size:.85rem;}
+    .tujuan-card{padding:18px;}
+}
+@media(max-width:420px){
+    .vm-visi,.vm-misi{padding:18px 14px;}
+    .vm-misi-body-inner{padding-left:36px;}
+}
 
 .grid{display:grid;gap:26px;}
 .grid-2{grid-template-columns:repeat(2,1fr);}
 .grid-3{grid-template-columns:repeat(3,1fr);}
 .grid-4{grid-template-columns:repeat(4,1fr);}
 @media(max-width:900px){.grid-3,.grid-4{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+@media(max-width:768px){.grid-2{grid-template-columns:1fr;}}
+@media(max-width:600px){.grid-3,.grid-4{grid-template-columns:1fr;}}
 
 /* ===== FILTER TABS (dept/struktur) ===== */
 .filter-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px;}
@@ -430,7 +506,6 @@ label{font-weight:600;font-size:.85rem;color:var(--maroon-900);margin-bottom:7px
 .member-card .avatar{width:96px;height:96px;}
 
 /* ===== GRID ALIGN ===== */
-.grid-2{grid-template-columns:repeat(2,1fr);}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;}
 @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:34px;}}
 /* Grid inline dua kolom di halaman publik → tumpuk jadi satu kolom */
@@ -619,15 +694,23 @@ a,button,.btn,.card,.contact-links a,.page-btn,.kabinet-opt,.filter-tabs button{
                 <span><?php echo esc(SITE_NAME); ?></span>
             </span>
         </a>
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="index.php" class="<?php echo ($current_page=='index.php'||$current_page=='')?'active':''; ?>">Home</a></li>
-            <li><a href="tentang.php" class="<?php echo ($current_page=='tentang.php')?'active':''; ?>">Tentang Kami</a></li>
-            <li><a href="struktur.php" class="<?php echo ($current_page=='struktur.php')?'active':''; ?>">Struktur</a></li>
-            <li><a href="program-kerja.php" class="<?php echo ($current_page=='program-kerja.php')?'active':''; ?>">Program Kerja</a></li>
-            <li><a href="berita.php" class="<?php echo (in_array($current_page,['berita.php','berita-detail.php']))?'active':''; ?>">Berita</a></li>
-            <li><a href="pendaftaran.php" class="<?php echo ($current_page=='pendaftaran.php')?'active':''; ?>">Pendaftaran</a></li>
-            <li class="nav-cta"><a href="aspirasi.php" class="btn btn-gold btn-sm"><i class="bi bi-chat-dots"></i> Sampaikan Aspirasi</a></li>
-        </ul>
+        <aside class="nav-menu" id="navMenu">
+            <button class="nav-close" id="navClose" aria-label="Tutup menu"><i class="bi bi-x-lg"></i></button>
+            <div class="mobile-brand" onclick="window.location='index.php'">
+                <img src="<?php echo esc(setting('logo_bem', 'assets/img/logobem.png')); ?>" alt="Logo">
+                <div><b><?php echo esc(SITE_SHORT); ?></b><span><?php echo esc(SITE_NAME); ?></span></div>
+            </div>
+            <div class="nav-grp">Menu</div>
+            <a href="index.php" class="<?php echo ($current_page=='index.php'||$current_page=='')?'active':''; ?>"><i class="bi bi-house-door"></i> Home</a>
+            <a href="tentang.php" class="<?php echo ($current_page=='tentang.php')?'active':''; ?>"><i class="bi bi-info-circle"></i> Tentang Kami</a>
+            <a href="struktur.php" class="<?php echo ($current_page=='struktur.php')?'active':''; ?>"><i class="bi bi-people"></i> Struktur</a>
+            <div class="nav-grp">Publikasi</div>
+            <a href="program-kerja.php" class="<?php echo ($current_page=='program-kerja.php')?'active':''; ?>"><i class="bi bi-clipboard2-check"></i> Program Kerja</a>
+            <a href="berita.php" class="<?php echo (in_array($current_page,['berita.php','berita-detail.php']))?'active':''; ?>"><i class="bi bi-newspaper"></i> Berita</a>
+            <div class="nav-grp">Layanan</div>
+            <a href="pendaftaran.php" class="<?php echo ($current_page=='pendaftaran.php')?'active':''; ?>"><i class="bi bi-person-check"></i> Pendaftaran</a>
+            <div class="nav-cta"><a href="aspirasi.php" class="btn btn-gold btn-sm"><i class="bi bi-chat-dots"></i> Sampaikan Aspirasi</a></div>
+        </aside>
         <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="bi bi-list"></i></button>
     </div>
 </nav>

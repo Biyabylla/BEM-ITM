@@ -44,7 +44,9 @@ include 'includes/admin-header.php';
 </div>
 
 <div style="margin-bottom:24px;">
-    <input type="text" id="adminDepartemenSearch" class="form-control" placeholder="Cari nama departemen..." style="width:300px;padding:.5rem .8rem;font-size:1rem;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);">
+    <div class="search-wrap">
+        <input type="text" id="adminDepartemenSearch" class="form-control" placeholder="Cari nama departemen...">
+    </div>
 </div>
 
 <div style="display:grid;grid-template-columns:.9fr 1.4fr;gap:24px;align-items:start;">
@@ -78,9 +80,9 @@ include 'includes/admin-header.php';
             <tbody>
             <?php while ($row = mysqli_fetch_assoc($list)): ?>
             <tr>
-                <td><i class="bi <?php echo esc($row['icon']); ?>"></i> <?php echo esc($row['nama_departemen']); ?></td>
-                <td><span class="badge badge-maroon"><?php echo $row['jml_anggota']; ?> orang</span></td>
-                <td style="white-space:nowrap;">
+                <td data-label="Departemen"><i class="bi <?php echo esc($row['icon']); ?>"></i> <?php echo esc($row['nama_departemen']); ?></td>
+                <td data-label="Jml Anggota"><span class="badge badge-maroon"><?php echo $row['jml_anggota']; ?> orang</span></td>
+                <td data-label="Aksi" class="action-cell">
                     <a href="?edit=<?php echo $row['id']; ?>" class="btn btn-outline btn-sm"><i class="bi bi-pencil"></i></a>
                     <a href="?hapus=<?php echo $row['id']; ?>" onclick="return confirmAction('Hapus departemen ini? Program kerja terkait akan ikut terhapus, dan pengurusnya kehilangan departemen.', this.href)" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                 </td>

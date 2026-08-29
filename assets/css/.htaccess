@@ -1,36 +1,4 @@
-# ======================================================
-# BEM ITM — Proteksi Folder CSS
-# ======================================================
 Options -Indexes
-
-<IfModule php_module>
-    php_flag engine off
-</IfModule>
-<IfModule mod_php7.c>
-    php_flag engine off
-</IfModule>
-<IfModule mod_php8.c>
-    php_flag engine off
-</IfModule>
-RemoveHandler .php .phtml .pht .phar .cgi .pl .py .sh .asp .aspx
-RemoveType .php .phtml .pht .phar
-
 <FilesMatch "\.(php\d*|phtml|pht|phar|cgi|pl|py|sh|asp|aspx)$">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order allow,deny
-        Deny from all
-    </IfModule>
-</FilesMatch>
-
-<FilesMatch "^\.">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order allow,deny
-        Deny from all
-    </IfModule>
+    Require all denied
 </FilesMatch>

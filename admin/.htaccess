@@ -1,17 +1,16 @@
 # ======================================================
-# BEM ITM — Proteksi Area Admin
+# BEM ITM - Proteksi Area Admin (InfinityFree)
 # ======================================================
 Options -Indexes
 
-# 1) Tolak akses langsung ke folder includes (berisi auth.php dll)
-#    serta file konfigurasi/auth tidak boleh diakses langsung
+# Tolak akses langsung ke folder includes
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule ^includes(/|$) - [F,L,NC]
     RewriteRule ^(auth\.php|\.env|config\.php|.*\.sql|.*\.log|.*\.bak)$ - [F,L,NC]
 </IfModule>
 
-# 2) Tolak akses file tersembunyi (dotfiles)
+# Blokir dotfiles
 <FilesMatch "^\.">
     <IfModule mod_authz_core.c>
         Require all denied
@@ -22,41 +21,19 @@ Options -Indexes
     </IfModule>
 </FilesMatch>
 
-# 3) Blokir bot & serangan umum di area admin
+# Blokir bot & serangan
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    # Blokir user-agent berbahaya
-    RewriteCond %{HTTP_USER_AGENT} (sqlmap|nikto|nessus|dirbuster|gobuster|wfuzz|ffuf|nmap) [NC]
+    RewriteCond %{HTTP_USER_AGENT} (sqlmap|nikto|nessus|dirbuster|gobuster) [NC]
     RewriteRule .* - [F,L]
-    # Blokir path traversal di admin
     RewriteCond %{QUERY_STRING} (\.\.\/|\.\.\\) [NC]
     RewriteRule .* - [F,L]
-    # Blokir common attack paths
     RewriteRule ^(phpmyadmin|phpMyAdmin|myadmin|mysql|dbadmin) - [F,L,NC]
 </IfModule>
 
-# 4) Header keamanan tambahan untuk area admin
+# Security headers
 <IfModule mod_headers.c>
-    Header always set X-Content-Type-Options "nosniff"
-    Header always set X-Frame-Options "SAMEORIGIN"
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-    Header always set X-XSS-Protection "1; mode=block"
-    Header always set Cache-Control "no-cache, no-store, must-revalidate"
-    Header always set Pragma "no-cache"
-    Header always set Expires "0"
-</IfModule>
-
-# 5) Sembunyikan versi server / PHP
-<IfModule mod_headers.c>
-    Header unset X-Powered-By
-    Header always unset X-Powered-By
-</IfModule>
-<IfModule php_module>
-    php_flag expose_php Off
-</IfModule>
-<IfModule mod_php7.c>
-    php_flag expose_php Off
-</IfModule>
-<IfModule mod_php8.c>
-    php_flag expose_php Off
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>

@@ -55,19 +55,19 @@ include 'includes/admin-header.php';
         <tbody>
         <?php while ($row = mysqli_fetch_assoc($list)): ?>
         <tr>
-            <td><?php echo esc($row['nama']); ?><?php if($row['nim']): ?><br><span style="color:var(--ink-soft);font-size:.75rem;">NIM: <?php echo esc($row['nim']); ?></span><?php endif; ?></td>
-            <td><?php echo esc($row['email']); ?></td>
-            <td><span class="badge badge-maroon"><?php echo esc(ucfirst($row['jenis'])); ?></span></td>
-            <td style="max-width:260px;"><?php echo esc($row['pesan']); ?></td>
-            <td><?php echo date('d/m/Y H:i', strtotime($row['created_at'])); ?></td>
-            <td>
+            <td data-label="Nama"><?php echo esc($row['nama']); ?><?php if($row['nim']): ?><br><span style="color:var(--ink-soft);font-size:.75rem;">NIM: <?php echo esc($row['nim']); ?></span><?php endif; ?></td>
+            <td data-label="Kontak"><?php echo esc($row['email']); ?></td>
+            <td data-label="Jenis"><span class="badge badge-maroon"><?php echo esc(ucfirst($row['jenis'])); ?></span></td>
+            <td data-label="Pesan" style="max-width:260px;"><?php echo esc($row['pesan']); ?></td>
+            <td data-label="Tanggal"><?php echo date('d/m/Y H:i', strtotime($row['created_at'])); ?></td>
+            <td data-label="Status">
                 <select onchange="window.location='?jenis=<?php echo urlencode($filter); ?>&id=<?php echo $row['id']; ?>&status='+this.value" class="form-control" style="padding:6px 10px;font-size:.75rem;">
                     <option value="baru" <?php echo $row['status']=='baru'?'selected':''; ?>>Baru</option>
                     <option value="dibaca" <?php echo $row['status']=='dibaca'?'selected':''; ?>>Dibaca</option>
                     <option value="ditindaklanjuti" <?php echo $row['status']=='ditindaklanjuti'?'selected':''; ?>>Ditindaklanjuti</option>
                 </select>
             </td>
-            <td><a href="?hapus=<?php echo $row['id']; ?>" onclick="return confirmAction('Hapus aspirasi ini?', this.href)" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a></td>
+            <td data-label="Aksi" class="action-cell"><a href="?hapus=<?php echo $row['id']; ?>" onclick="return confirmAction('Hapus aspirasi ini?', this.href)" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a></td>
         </tr>
         <?php endwhile; ?>
         </tbody>

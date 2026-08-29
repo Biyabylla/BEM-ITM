@@ -63,7 +63,9 @@ include 'includes/admin-header.php';
 </div>
 
 <div style="margin-bottom:24px;">
-    <input type="text" id="adminBeritaSearch" class="form-control" placeholder="Cari judul berita..." style="width:300px;padding:.5rem .8rem;font-size:1rem;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);">
+    <div class="search-wrap">
+        <input type="text" id="adminBeritaSearch" class="form-control" placeholder="Cari judul berita...">
+    </div>
 </div>
 
 <div style="display:grid;grid-template-columns:.9fr 1.4fr;gap:24px;align-items:start;">
@@ -110,17 +112,17 @@ include 'includes/admin-header.php';
             <tbody>
             <?php while ($row = mysqli_fetch_assoc($list)): ?>
             <tr>
-                <td>
+                <td data-label="Gambar">
                     <?php if (!empty($row['gambar'])): ?>
                     <img src="<?php echo esc(img_url($row['gambar'])); ?>" alt="Gambar" style="width:72px;height:44px;object-fit:cover;border-radius:8px;border:1px solid var(--line);">
                     <?php else: ?>
                     <span style="color:var(--ink-soft);font-size:.75rem;">-</span>
                     <?php endif; ?>
                 </td>
-                <td><?php echo esc($row['judul']); ?></td>
-                <td><?php echo esc($row['penulis']); ?></td>
-                <td><?php echo date('d/m/Y', strtotime($row['tanggal_publish'])); ?></td>
-                <td style="white-space:nowrap;">
+                <td data-label="Judul"><?php echo esc($row['judul']); ?></td>
+                <td data-label="Penulis"><?php echo esc($row['penulis']); ?></td>
+                <td data-label="Tanggal"><?php echo date('d/m/Y', strtotime($row['tanggal_publish'])); ?></td>
+                <td data-label="Aksi" class="action-cell">
                     <a href="../berita-detail.php?slug=<?php echo esc($row['slug']); ?>" target="_blank" class="btn btn-outline btn-sm"><i class="bi bi-eye"></i></a>
                     <a href="?edit=<?php echo $row['id']; ?>" class="btn btn-outline btn-sm"><i class="bi bi-pencil"></i></a>
                     <a href="?hapus=<?php echo $row['id']; ?>" onclick="return confirmAction('Hapus berita ini?', this.href)" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>

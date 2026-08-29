@@ -63,7 +63,9 @@ include 'includes/admin-header.php';
 </div>
 
 <div style="margin-bottom:24px;">
-    <input type="text" id="adminProkerSearch" class="form-control" placeholder="Cari judul program..." style="width:300px;padding:.5rem .8rem;font-size:1rem;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);">
+    <div class="search-wrap">
+        <input type="text" id="adminProkerSearch" class="form-control" placeholder="Cari judul program...">
+    </div>
 </div>
 
 <div style="display:grid;grid-template-columns:.9fr 1.4fr;gap:24px;align-items:start;">
@@ -131,12 +133,12 @@ include 'includes/admin-header.php';
             <tbody>
             <?php while ($row = mysqli_fetch_assoc($list)): ?>
             <tr>
-                <td><?php echo esc($row['judul']); ?></td>
-                <td><?php echo esc($row['nama_departemen'] ?? '-'); ?></td>
-                <td><?php echo esc($row['nama_kabinet'] ?? '-'); ?></td>
-                <td><?php echo date('d/m/Y', strtotime($row['tanggal_kegiatan'])); ?></td>
-                <td><span class="badge badge-maroon"><?php echo esc(ucfirst($row['status'])); ?></span></td>
-                <td style="white-space:nowrap;">
+                <td data-label="Judul"><?php echo esc($row['judul']); ?></td>
+                <td data-label="Departemen"><?php echo esc($row['nama_departemen'] ?? '-'); ?></td>
+                <td data-label="Kabinet"><?php echo esc($row['nama_kabinet'] ?? '-'); ?></td>
+                <td data-label="Tanggal"><?php echo date('d/m/Y', strtotime($row['tanggal_kegiatan'])); ?></td>
+                <td data-label="Status"><span class="badge badge-maroon"><?php echo esc(ucfirst($row['status'])); ?></span></td>
+                <td data-label="Aksi" class="action-cell">
                     <a href="?edit=<?php echo $row['id']; ?>" class="btn btn-outline btn-sm"><i class="bi bi-pencil"></i></a>
                     <a href="?hapus=<?php echo $row['id']; ?>" onclick="return confirmAction('Hapus program kerja ini?', this.href)" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                 </td>

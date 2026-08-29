@@ -65,7 +65,9 @@ function badge_status($s) {
 </div>
 
 <div style="margin-bottom:24px;">
-    <input type="text" id="adminPendaftaranSearch" class="form-control" placeholder="Cari nama calon..." style="width:300px;padding:.5rem .8rem;font-size:1rem;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);">
+    <div class="search-wrap">
+        <input type="text" id="adminPendaftaranSearch" class="form-control" placeholder="Cari nama calon...">
+    </div>
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:30px;">
@@ -142,13 +144,13 @@ function badge_status($s) {
             <tr><td colspan="7" style="text-align:center;color:var(--ink-soft);">Belum ada pendaftar.</td></tr>
         <?php else: foreach ($list_presma as $r): ?>
             <tr>
-                <td><?php echo esc($r['nama_presma']); ?><br><span style="color:var(--ink-soft);font-size:.74rem;"><?php echo esc($r['prodi'] ?? '-'); ?></span></td>
-                <td><?php echo esc($r['nama_wapresma']); ?></td>
-                <td><?php echo esc($r['email']); ?><?php if (!empty($r['no_hp'])): ?><br><span style="color:var(--ink-soft);font-size:.74rem;"><?php echo esc($r['no_hp']); ?></span><?php endif; ?></td>
-                <td style="max-width:220px;"><?php echo esc(mb_strimwidth($r['visi_misi'] ?? '',0,70,'...')); ?></td>
-                <td><?php echo badge_status($r['status']); ?></td>
-                <td><?php echo date('d/m/Y', strtotime($r['created_at'])); ?></td>
-                <td style="white-space:nowrap;">
+                <td data-label="Calon Pres"><?php echo esc($r['nama_presma']); ?><br><span style="color:var(--ink-soft);font-size:.74rem;"><?php echo esc($r['prodi'] ?? '-'); ?></span></td>
+                <td data-label="Calon Wapres"><?php echo esc($r['nama_wapresma']); ?></td>
+                <td data-label="Kontak"><?php echo esc($r['email']); ?><?php if (!empty($r['no_hp'])): ?><br><span style="color:var(--ink-soft);font-size:.74rem;"><?php echo esc($r['no_hp']); ?></span><?php endif; ?></td>
+                <td data-label="Visi Misi" style="max-width:220px;"><?php echo esc(mb_strimwidth($r['visi_misi'] ?? '',0,70,'...')); ?></td>
+                <td data-label="Status"><?php echo badge_status($r['status']); ?></td>
+                <td data-label="Tanggal"><?php echo date('d/m/Y', strtotime($r['created_at'])); ?></td>
+                <td data-label="Aksi" class="action-cell">
                     <a href="?tb=presma&id=<?php echo $r['id']; ?>&status=baru" class="btn btn-outline btn-sm" title="Tandai Baru">B</a>
                     <a href="?tb=presma&id=<?php echo $r['id']; ?>&status=diterima" class="btn btn-outline btn-sm" title="Terima"><i class="bi bi-check-lg"></i></a>
                     <a href="?tb=presma&id=<?php echo $r['id']; ?>&status=ditolak" class="btn btn-outline btn-sm" title="Tolak"><i class="bi bi-x-lg"></i></a>
@@ -171,14 +173,14 @@ function badge_status($s) {
             <tr><td colspan="8" style="text-align:center;color:var(--ink-soft);">Belum ada pendaftar.</td></tr>
         <?php else: foreach ($list_pengurus as $r): ?>
             <tr>
-                <td><?php echo esc($r['nama']); ?><br><span style="color:var(--ink-soft);font-size:.74rem;"><?php echo esc($r['prodi'] ?? '-'); ?></span></td>
-                <td><?php echo esc($r['nama_departemen'] ?? '-'); ?></td>
-                <td><?php echo esc($r['pilihan_jabatan'] ?? '-'); ?></td>
-                <td><?php echo esc($r['email']); ?><?php if (!empty($r['no_hp'])): ?><br><span style="color:var(--ink-soft);font-size:.74rem;"><?php echo esc($r['no_hp']); ?></span><?php endif; ?></td>
-                <td style="max-width:200px;"><?php echo esc(mb_strimwidth($r['alasan'] ?? '',0,60,'...')); ?></td>
-                <td><?php echo badge_status($r['status']); ?></td>
-                <td><?php echo date('d/m/Y', strtotime($r['created_at'])); ?></td>
-                <td style="white-space:nowrap;">
+                <td data-label="Nama"><?php echo esc($r['nama']); ?><br><span style="color:var(--ink-soft);font-size:.74rem;"><?php echo esc($r['prodi'] ?? '-'); ?></span></td>
+                <td data-label="Departemen"><?php echo esc($r['nama_departemen'] ?? '-'); ?></td>
+                <td data-label="Posisi"><?php echo esc($r['pilihan_jabatan'] ?? '-'); ?></td>
+                <td data-label="Kontak"><?php echo esc($r['email']); ?><?php if (!empty($r['no_hp'])): ?><br><span style="color:var(--ink-soft);font-size:.74rem;"><?php echo esc($r['no_hp']); ?></span><?php endif; ?></td>
+                <td data-label="Alasan" style="max-width:200px;"><?php echo esc(mb_strimwidth($r['alasan'] ?? '',0,60,'...')); ?></td>
+                <td data-label="Status"><?php echo badge_status($r['status']); ?></td>
+                <td data-label="Tanggal"><?php echo date('d/m/Y', strtotime($r['created_at'])); ?></td>
+                <td data-label="Aksi" class="action-cell">
                     <a href="?tb=pengurus&id=<?php echo $r['id']; ?>&status=baru" class="btn btn-outline btn-sm" title="Tandai Baru">B</a>
                     <a href="?tb=pengurus&id=<?php echo $r['id']; ?>&status=diterima" class="btn btn-outline btn-sm" title="Terima"><i class="bi bi-check-lg"></i></a>
                     <a href="?tb=pengurus&id=<?php echo $r['id']; ?>&status=ditolak" class="btn btn-outline btn-sm" title="Tolak"><i class="bi bi-x-lg"></i></a>

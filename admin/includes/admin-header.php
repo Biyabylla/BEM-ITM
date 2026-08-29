@@ -44,9 +44,10 @@ a{text-decoration:none;color:inherit;}
 }
 .sidebar nav a:hover{background:rgba(255,255,255,.08);}
 .sidebar nav a.active{background:var(--gold);color:var(--maroon-900);font-weight:700;}
-.sidebar-close{display:none;position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:none;background:rgba(255,255,255,.1);color:#fff;font-size:.85rem;cursor:pointer;z-index:10;align-items:center;justify-content:center;}
-.sidebar-close:hover{background:rgba(255,255,255,.2);}
 .sidebar .grp{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;opacity:.55;margin:18px 6px 8px;}
+.sidebar-close{display:none;}
+.sidebar-nav{flex:1;}
+.sidebar-bottom{padding:14px 10px;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0;}
 .main{flex:1;min-width:0;}
 .topbar{
     background:var(--field);border-bottom:1px solid var(--line);padding:16px 30px;display:flex;
@@ -110,30 +111,62 @@ label{font-weight:600;font-size:.82rem;margin-bottom:6px;display:block;color:var
 @media(max-width:1000px){.stat-grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:620px){.stat-grid{grid-template-columns:repeat(2,1fr);}.form-grid-2{grid-template-columns:1fr;}}
 @media(max-width:880px){
-    .sidebar{position:fixed;left:-280px;top:0;width:280px;box-shadow:none;transition:left .3s cubic-bezier(.4,0,.2,1);padding:20px 14px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-    .sidebar.open{left:0;box-shadow:20px 0 60px rgba(0,0,0,.45);}
-    .topbar .menu-btn{display:flex;align-items:center;justify-content:center;}
-    .content{padding:18px;}
-    .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(30,8,12,.55);z-index:99;opacity:0;transition:opacity .3s ease;}
-    .sidebar-backdrop.show{display:block;opacity:1;}
-    .content [style*="grid-template-columns"]{grid-template-columns:1fr !important;}
-    .sidebar .brand{margin-bottom:20px;padding:0 8px;}
+    .sidebar{
+        position:fixed;left:-300px;top:0;width:280px;height:100vh;
+        box-shadow:none;transition:left .35s cubic-bezier(.4,0,.2,1);
+        padding:0;overflow:hidden;-webkit-overflow-scrolling:touch;
+        display:flex;flex-direction:column;
+    }
+    .sidebar.open{left:0;box-shadow:16px 0 50px rgba(0,0,0,.5);}
+    .sidebar::-webkit-scrollbar{width:4px;}
+    .sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:4px;}
+    .sidebar .brand{
+        margin:0;padding:16px 18px 12px;border-bottom:1px solid rgba(255,255,255,.08);
+        display:flex;align-items:center;gap:12px;flex-shrink:0;
+    }
     .sidebar .brand .badge-b{width:36px;height:36px;font-size:.8rem;}
-    .sidebar .brand b{font-size:.9rem;}
-    .sidebar .grp{font-size:.65rem;margin:14px 8px 6px;opacity:.6;letter-spacing:.08em;}
+    .sidebar .brand b{font-size:.88rem;}
+    .sidebar .brand span{font-size:.63rem;}
+    .sidebar-close{
+        display:flex;top:auto;right:auto;position:absolute;top:16px;right:14px;width:30px;height:30px;border-radius:8px;
+        background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:.8rem;z-index:10;
+    }
+    .sidebar-close:active{background:rgba(255,255,255,.18);transform:scale(.92);}
+    .sidebar-nav{flex:1;padding:10px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+    .sidebar .grp{
+        font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;opacity:.45;
+        margin:18px 10px 6px;color:#eadfe1;font-weight:600;
+        display:flex;align-items:center;gap:8px;
+    }
+    .sidebar .grp::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08);}
+    .sidebar nav{padding:0;}
     .sidebar nav a{
-        display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:12px;font-size:.9rem;font-weight:500;
-        color:#eadfe1;margin-bottom:2px;transition:.15s;min-height:48px;
+        display:flex;align-items:center;gap:13px;padding:13px 16px;border-radius:12px;
+        font-size:.88rem;font-weight:500;color:#eadfe1;margin-bottom:2px;
+        transition:.15s;min-height:48px;position:relative;
         touch-action:manipulation;-webkit-tap-highlight-color:transparent;
     }
-    .sidebar nav a i{font-size:1.15rem;width:22px;text-align:center;flex-shrink:0;}
-    .sidebar nav a:hover{background:rgba(255,255,255,.1);}
-    .sidebar nav a.active{background:var(--gold);color:var(--maroon-900);font-weight:700;box-shadow:0 2px 8px rgba(169,127,61,.3);}
-    .sidebar nav a:active{background:rgba(255,255,255,.15);transform:scale(.97);}
-    .sidebar-close{display:flex;}
+    .sidebar nav a i{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0;opacity:.75;}
+    .sidebar nav a:hover{background:rgba(255,255,255,.07);}
+    .sidebar nav a.active{
+        background:rgba(169,127,61,.18);color:var(--gold-light);font-weight:700;
+        border-left:3px solid var(--gold);padding-left:13px;
+    }
+    .sidebar nav a.active i{opacity:1;color:var(--gold);}
+    .sidebar nav a:active{background:rgba(255,255,255,.12);transform:scale(.98);}
+    .sidebar-bottom{
+        padding:10px;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0;
+    }
+    .sidebar-bottom nav a{font-size:.84rem;color:rgba(255,255,255,.6);}
+    .sidebar-bottom nav a:hover{color:#fff;}
+    .topbar .menu-btn{display:flex;align-items:center;justify-content:center;}
+    .content{padding:18px;}
+    .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(20,5,8,.6);z-index:99;opacity:0;transition:opacity .3s ease;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
+    .sidebar-backdrop.show{display:block;opacity:1;}
+    .content [style*="grid-template-columns"]{grid-template-columns:1fr !important;}
 }
 @media(max-width:420px){
-    .sidebar{width:100%;left:-100%;}
+    .sidebar{width:calc(100% - 56px);left:-300px;}
     .sidebar.open{left:0;}
 }
 @media(max-width:620px){
@@ -159,12 +192,81 @@ html{scroll-behavior:smooth;}
 @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;}
 }
+
+/* ===== SEARCH INPUT RESPONSIVE ===== */
+.search-wrap{position:relative;max-width:360px;width:100%;}
+.search-wrap .form-control{padding-left:38px;}
+.search-wrap::before{
+    content:'';position:absolute;left:13px;top:50%;transform:translateY(-50%);
+    width:16px;height:16px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b5a5f' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E") no-repeat center;
+}
+
+/* ===== TABLE MOBILE CARDS ===== */
+@media(max-width:880px){
+    table{min-width:0;}
+    .table-responsive{overflow-x:hidden;}
+    table thead{display:none;}
+    table tbody tr{
+        display:block;background:var(--cream-soft);border:1px solid var(--line);
+        border-radius:12px;padding:14px 16px;margin-bottom:12px;
+        box-shadow:0 2px 8px rgba(68,18,27,.06);
+    }
+    table tbody tr:hover td{background:transparent;}
+    table tbody td{
+        display:flex;justify-content:space-between;align-items:center;
+        padding:8px 0;border:none;border-bottom:1px solid var(--line);
+        font-size:.84rem;gap:10px;text-align:right;
+    }
+    table tbody td:last-child{border-bottom:none;}
+    table tbody td::before{
+        content:attr(data-label);font-weight:700;color:var(--maroon-900);
+        font-size:.78rem;text-transform:uppercase;letter-spacing:.03em;
+        flex-shrink:0;text-align:left;min-width:80px;
+    }
+    table tbody td[data-label=""]::before{display:none;}
+    table tbody td.no-label::before{display:none;}
+}
+
+/* ===== ACTION BUTTONS MOBILE ===== */
+@media(max-width:880px){
+    table tbody td .btn-sm{padding:10px 12px;font-size:.8rem;min-width:38px;min-height:38px;justify-content:center;}
+    table tbody td .btn-sm i{font-size:1rem;}
+    .action-cell{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;}
+}
+
+/* ===== PAGE HEAD MOBILE ===== */
+@media(max-width:420px){
+    .topbar{padding:12px 14px;}
+    .topbar h2{font-size:1rem;}
+    .content{padding:12px;}
+    .page-head{margin-bottom:18px;}
+    .page-head h3{font-size:.95rem;}
+    .search-wrap{max-width:100%;}
+    .card{border-radius:12px;}
+    .stat-card{padding:16px;}
+    .stat-card h4{font-size:.82rem;}
+    .stat-card span{font-size:1.4rem;}
+    .btn{min-height:44px;}
+}
+
+/* ===== SAFE AREA INSETS ===== */
+@supports(padding:max(0px)){
+    .sidebar{padding-left:max(0px,env(safe-area-inset-left));}
+    .topbar{padding-right:max(30px,env(safe-area-inset-right));}
+    .content{padding-bottom:max(30px,env(safe-area-inset-bottom));}
+    #toastWrap{right:max(20px,env(safe-area-inset-right));}
+}
+
+/* ===== EMPTY STATE ===== */
+.table-empty{
+    text-align:center;padding:40px 20px;color:var(--ink-soft);font-size:.9rem;
+}
+.table-empty i{display:block;font-size:2rem;color:var(--line);margin-bottom:10px;}
 </style>
 </head>
 <body>
 <?php $adm = basename($_SERVER['PHP_SELF']); ?>
 <aside class="sidebar" id="adminSidebar">
-    <button class="sidebar-close" id="sidebarClose" aria-label="Tutup menu"><i class="bi bi-x-lg"></i></button>
     <div class="brand" style="cursor:pointer;" onclick="window.location='profil-admin.php'">
         <?php if (!empty($admin_foto)): ?>
         <img src="<?php echo esc(img_url($admin_foto)); ?>?v=<?php echo time(); ?>" alt="Foto"
@@ -173,47 +275,55 @@ html{scroll-behavior:smooth;}
         <span class="badge-b"><?php echo strtoupper(substr($_SESSION['admin_nama'] ?? 'A',0,1)); ?></span>
         <?php endif; ?>
         <div><b><?php echo esc($_SESSION['admin_nama'] ?? 'Admin'); ?></b><span><?php echo esc(ROLES[$_SESSION['admin_role']]['label'] ?? 'Admin'); ?></span></div>
-    </div>    <div class="grp">Utama</div>
-    <nav>
-        <a href="index.php" class="<?php echo $adm=='index.php'?'active':''; ?>"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
-    </nav>
-    <?php if (cek_akses('pengaturan') || cek_akses('kabinet') || cek_akses('profil') || cek_akses('sambutan') || cek_akses('departemen') || cek_akses('pengurus') || cek_akses('pendaftaran')): ?>
-    <div class="grp">Konten Situs</div>
-    <nav>
-        <?php if (cek_akses('pengaturan')): ?><a href="pengaturan.php" class="<?php echo $adm=='pengaturan.php'?'active':''; ?>"><i class="bi bi-sliders"></i> Identitas &amp; Pengaturan</a><?php endif; ?>
-        <?php if (cek_akses('kabinet')): ?><a href="kabinet.php" class="<?php echo $adm=='kabinet.php'?'active':''; ?>"><i class="bi bi-flag-fill"></i> Kabinet</a><?php endif; ?>
-        <?php if (cek_akses('profil')): ?><a href="profil.php" class="<?php echo $adm=='profil.php'?'active':''; ?>"><i class="bi bi-person-lines-fill"></i> Profil &amp; Visi Misi</a><?php endif; ?>
-        <?php if (cek_akses('sambutan')): ?><a href="sambutan.php" class="<?php echo $adm=='sambutan.php'?'active':''; ?>"><i class="bi bi-megaphone-fill"></i> Sambutan</a><?php endif; ?>
-        <?php if (cek_akses('departemen')): ?><a href="departemen.php" class="<?php echo $adm=='departemen.php'?'active':''; ?>"><i class="bi bi-diagram-3-fill"></i> Departemen</a><?php endif; ?>
-        <?php if (cek_akses('pengurus')): ?><a href="pengurus.php" class="<?php echo $adm=='pengurus.php'?'active':''; ?>"><i class="bi bi-person-raised-hand"></i> Struktur / Pengurus</a><?php endif; ?>
-        <?php if (cek_akses('pendaftaran')): ?><a href="pendaftaran.php" class="<?php echo $adm=='pendaftaran.php'?'active':''; ?>"><i class="bi bi-person-check-fill"></i> Pendaftaran Rekrutmen</a><?php endif; ?>
-    </nav>
-    <?php endif; ?>
-    <?php if (cek_akses('program-kerja') || cek_akses('berita')): ?>
-    <div class="grp">Publikasi</div>
-    <nav>
-        <?php if (cek_akses('program-kerja')): ?><a href="program-kerja.php" class="<?php echo $adm=='program-kerja.php'?'active':''; ?>"><i class="bi bi-kanban-fill"></i> Program Kerja</a><?php endif; ?>
-        <?php if (cek_akses('berita')): ?><a href="berita.php" class="<?php echo $adm=='berita.php'?'active':''; ?>"><i class="bi bi-newspaper"></i> Berita</a><?php endif; ?>
-    </nav>
-    <?php endif; ?>
-    <?php if (cek_akses('aspirasi')): ?>
-    <div class="grp">Interaksi</div>
-    <nav>
-        <a href="aspirasi.php" class="<?php echo $adm=='aspirasi.php'?'active':''; ?>"><i class="bi bi-chat-left-text-fill"></i> Aspirasi Masuk</a>
-    </nav>
-    <?php endif; ?>
-    <?php if (cek_akses('kelola-admin')): ?>
-    <div class="grp">Pengelolaan</div>
-    <nav>
-        <a href="kelola-admin.php" class="<?php echo $adm=='kelola-admin.php'?'active':''; ?>"><i class="bi bi-people-fill"></i> Kelola Admin</a>
-    </nav>
-    <?php endif; ?>
-    <div class="grp">Lainnya</div>
-    <nav>
-        <a href="profil-admin.php" class="<?php echo $adm=='profil-admin.php'?'active':''; ?>"><i class="bi bi-person-circle"></i> Profil Saya</a>
-        <a href="../index.php" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Lihat Situs</a>
-        <a href="javascript:void(0)" onclick="return confirmAction('Yakin ingin logout?', 'logout.php')"><i class="bi bi-power"></i> Logout</a>
-    </nav>
+    </div>
+    <button class="sidebar-close" id="sidebarClose" aria-label="Tutup menu"><i class="bi bi-x-lg"></i></button>
+    <div class="sidebar-nav">
+        <div class="grp">Utama</div>
+        <nav>
+            <a href="index.php" class="<?php echo $adm=='index.php'?'active':''; ?>"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+        </nav>
+        <?php if (cek_akses('pengaturan') || cek_akses('kabinet') || cek_akses('profil') || cek_akses('sambutan') || cek_akses('departemen') || cek_akses('pengurus') || cek_akses('pendaftaran')): ?>
+        <div class="grp">Konten Situs</div>
+        <nav>
+            <?php if (cek_akses('pengaturan')): ?><a href="pengaturan.php" class="<?php echo $adm=='pengaturan.php'?'active':''; ?>"><i class="bi bi-sliders"></i> Identitas &amp; Pengaturan</a><?php endif; ?>
+            <?php if (cek_akses('kabinet')): ?><a href="kabinet.php" class="<?php echo $adm=='kabinet.php'?'active':''; ?>"><i class="bi bi-flag-fill"></i> Kabinet</a><?php endif; ?>
+            <?php if (cek_akses('profil')): ?><a href="profil.php" class="<?php echo $adm=='profil.php'?'active':''; ?>"><i class="bi bi-person-lines-fill"></i> Profil &amp; Visi Misi</a><?php endif; ?>
+            <?php if (cek_akses('sambutan')): ?><a href="sambutan.php" class="<?php echo $adm=='sambutan.php'?'active':''; ?>"><i class="bi bi-megaphone-fill"></i> Sambutan</a><?php endif; ?>
+            <?php if (cek_akses('departemen')): ?><a href="departemen.php" class="<?php echo $adm=='departemen.php'?'active':''; ?>"><i class="bi bi-diagram-3-fill"></i> Departemen</a><?php endif; ?>
+            <?php if (cek_akses('pengurus')): ?><a href="pengurus.php" class="<?php echo $adm=='pengurus.php'?'active':''; ?>"><i class="bi bi-person-raised-hand"></i> Struktur / Pengurus</a><?php endif; ?>
+            <?php if (cek_akses('pendaftaran')): ?><a href="pendaftaran.php" class="<?php echo $adm=='pendaftaran.php'?'active':''; ?>"><i class="bi bi-person-check-fill"></i> Pendaftaran Rekrutmen</a><?php endif; ?>
+        </nav>
+        <?php endif; ?>
+        <?php if (cek_akses('program-kerja') || cek_akses('berita')): ?>
+        <div class="grp">Publikasi</div>
+        <nav>
+            <?php if (cek_akses('program-kerja')): ?><a href="program-kerja.php" class="<?php echo $adm=='program-kerja.php'?'active':''; ?>"><i class="bi bi-kanban-fill"></i> Program Kerja</a><?php endif; ?>
+            <?php if (cek_akses('berita')): ?><a href="berita.php" class="<?php echo $adm=='berita.php'?'active':''; ?>"><i class="bi bi-newspaper"></i> Berita</a><?php endif; ?>
+        </nav>
+        <?php endif; ?>
+        <?php if (cek_akses('aspirasi')): ?>
+        <div class="grp">Interaksi</div>
+        <nav>
+            <a href="aspirasi.php" class="<?php echo $adm=='aspirasi.php'?'active':''; ?>"><i class="bi bi-chat-left-text-fill"></i> Aspirasi Masuk</a>
+        </nav>
+        <?php endif; ?>
+        <?php if (cek_akses('kelola-admin')): ?>
+        <div class="grp">Pengelolaan</div>
+        <nav>
+            <a href="kelola-admin.php" class="<?php echo $adm=='kelola-admin.php'?'active':''; ?>"><i class="bi bi-people-fill"></i> Kelola Admin</a>
+        </nav>
+        <?php endif; ?>
+        <div class="grp">Lainnya</div>
+        <nav>
+            <a href="profil-admin.php" class="<?php echo $adm=='profil-admin.php'?'active':''; ?>"><i class="bi bi-person-circle"></i> Profil Saya</a>
+            <a href="../index.php" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Lihat Situs</a>
+        </nav>
+    </div>
+    <div class="sidebar-bottom">
+        <nav>
+            <a href="javascript:void(0)" onclick="return confirmAction('Yakin ingin logout?', 'logout.php')"><i class="bi bi-power"></i> Logout</a>
+        </nav>
+    </div>
 </aside>
 <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 <div class="main">
