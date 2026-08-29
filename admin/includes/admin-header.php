@@ -161,6 +161,7 @@ label{font-weight:600;font-size:.82rem;margin-bottom:6px;display:block;color:var
     .sidebar-bottom nav a:hover{color:#fff;}
     .topbar .menu-btn{display:flex;align-items:center;justify-content:center;}
     .content{padding:18px;}
+    body{overflow-x:hidden;}
     .sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(20,5,8,.6);z-index:99;opacity:0;transition:opacity .3s ease;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);}
     .sidebar-backdrop.show{display:block;opacity:1;}
     .content [style*="grid-template-columns"]{grid-template-columns:1fr !important;}
