@@ -23,8 +23,8 @@ Website resmi Badan Eksekutif Mahasiswa (BEM) Institut Teknologi Mojosari, diban
 ## 🔑 Login Admin
 
 - URL: `http://localhost/bem-itm/admin/login.php`
-- Username: `admin`
-- Password: `admin123`
+- Username: `u`
+- Password: ``
 
 **⚠️ Segera ganti password default setelah login pertama kali** (update langsung di tabel `admin_users`, kolom `password`, gunakan `password_hash()` PHP untuk hash baru).
 
